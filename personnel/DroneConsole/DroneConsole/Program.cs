@@ -69,7 +69,6 @@ namespace DroneConsole
                     pos_X = DrawDrone(pos_X, POS_Y, batterie);
                 }
 
-
                 System.Threading.Thread.Sleep(500);
             }
 
@@ -78,7 +77,6 @@ namespace DroneConsole
 
         static int DrawDrone(int pos_X, int POS_Y, int batterie)
         {
-
             pos_X = pos_X + 1;
             Console.Write("x-O-x");
             Console.SetCursorPosition(pos_X, POS_Y - 1);
@@ -93,7 +91,5 @@ namespace DroneConsole
 
             return batterie;
         }
-
-
     }
 }
