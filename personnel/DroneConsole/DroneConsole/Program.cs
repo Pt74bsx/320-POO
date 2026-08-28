@@ -47,13 +47,15 @@ namespace DroneConsole
             Console.SetCursorPosition(pos_X, POS_Y - 1);
             Console.Write(batterie + "%");
 
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(500);     // Pause de 0,5 sec
 
+            // Boucle qui se répéte tant que la battrie est plus grande que 0
             while (batterie > 0)
             {
                 Console.Clear();
                 Console.SetCursorPosition(pos_X, POS_Y);
 
+                // Affichage drone quand il a plus de batterie 
                 if (batterie == 2)
                 {
                     Console.Write("____");
@@ -63,18 +65,28 @@ namespace DroneConsole
                     break;
                 }
 
+                // Drone fonctionne si la batterie est plus grande ou égal à 3
                 if (batterie >= 3)
                 {
                     batterie = etatDrone(batterie);
                     pos_X = DrawDrone(pos_X, POS_Y, batterie);
                 }
 
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(500);  // Pause de 0,5 sec
             }
 
-            Console.ReadLine();
+            Console.ReadLine(); // Permet d'éviter la fermeture du programme (temporaire)
         }
 
+        /// <summary>
+        /// Méthode qui permet de dessinner 
+        /// le drone et sa batterie
+        /// au bonne endroit 
+        /// </summary>
+        /// <param name="pos_X"></param>
+        /// <param name="POS_Y"></param>
+        /// <param name="batterie"></param>
+        /// <returns></returns>
         static int DrawDrone(int pos_X, int POS_Y, int batterie)
         {
             pos_X = pos_X + 1;
@@ -85,6 +97,12 @@ namespace DroneConsole
             return pos_X;
         }
 
+        /// <summary>
+        /// Méthode qui permet de gérer 
+        /// l'état du drone comme la batterie
+        /// </summary>
+        /// <param name="batterie"></param>
+        /// <returns></returns>
         static int etatDrone(int batterie)
         {
             batterie = batterie - 2;
