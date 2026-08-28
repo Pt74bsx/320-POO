@@ -49,7 +49,7 @@ namespace DroneConsole
 
             System.Threading.Thread.Sleep(500);
 
-            while (batterie > 0) 
+            while (batterie > 0)
             {
                 Console.Clear();
                 Console.SetCursorPosition(pos_X, POS_Y);
@@ -65,17 +65,35 @@ namespace DroneConsole
 
                 if (batterie >= 3)
                 {
-                    pos_X = pos_X + 1;
-                    batterie = batterie - 2;
-                    Console.Write("x-O-x");
-                    Console.SetCursorPosition(pos_X, POS_Y - 1);
-                    Console.Write(batterie + "%");
+                    batterie = etatDrone(batterie);
+                    pos_X = DrawDrone(pos_X, POS_Y, batterie);
                 }
+
 
                 System.Threading.Thread.Sleep(500);
             }
 
             Console.ReadLine();
         }
+
+        static int DrawDrone(int pos_X, int POS_Y, int batterie)
+        {
+
+            pos_X = pos_X + 1;
+            Console.Write("x-O-x");
+            Console.SetCursorPosition(pos_X, POS_Y - 1);
+            Console.Write(batterie + "%");
+
+            return pos_X;
+        }
+
+        static int etatDrone(int batterie)
+        {
+            batterie = batterie - 2;
+
+            return batterie;
+        }
+
+
     }
 }
