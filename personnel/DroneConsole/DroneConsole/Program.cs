@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,22 +35,39 @@ namespace DroneConsole
         static void Main(string[] args)
         {
             // Déclarations des objects 
-            Drone drone = new Drone(0, 10, 50);
+            Drone[] tblDrone = { new Drone(0, 10, 50), new Drone(0, 15, 30) };
 
             // Paramètre 
             Console.CursorVisible = false;
 
             // Boucle qui fait tourner les drones jusqu'à qui reste aucun drone 
-            while (drone.oneIsAlive())
+            while (oneIsAlive(tblDrone))
             {
-                drone.changeState();
-                drone.drawDrone();
-                System.Threading.Thread.Sleep(500);             // Pause de 0,5 sec
-
                 Console.Clear();
+
+                for (int i = 0; i < tblDrone.Length; i++)
+                {
+                    tblDrone[i].changeState();
+                    tblDrone[i].drawDrone();
+                }
+
+                Thread.Sleep(100);      // Pause de 0,1 sec
             }
 
             Console.ReadKey();
+        }
+
+        static public bool oneIsAlive(Drone[] tblDrone)
+        {
+            for (int i = 0; i < tblDrone.Length; i++)
+            {
+                if (tblDrone[i].Battery > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

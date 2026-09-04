@@ -13,6 +13,8 @@ namespace DroneConsole
         private int _posY;
         private int _battery;
 
+        public int Battery { get => _battery; }
+
         /// <summary>
         /// Construction pérsonalisé du drone
         /// </summary>
@@ -37,19 +39,6 @@ namespace DroneConsole
         }
 
         /// <summary>
-        /// Vérifier l'état du drone 
-        /// </summary>
-        public bool oneIsAlive()
-        {
-            if (_battery == 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Changer l'état du drone 
         /// </summary>
         public void changeState()
@@ -67,17 +56,32 @@ namespace DroneConsole
         public void drawDrone()
         {
             Console.SetCursorPosition(_posX, _posY);
-            if (_battery == 0)
+            if (_battery <= 0)
             {
-                Console.Write("____");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write("  " + _battery + "%");
                 Console.SetCursorPosition(_posX, _posY + 1);
-                Console.Write("Drone mort");
+                Console.Write("x-O-x");
+                Console.ResetColor();
             }
             else
             {
-                Console.Write("x-O-x");
-                Console.SetCursorPosition(_posX, _posY + 1);
-                Console.Write(" " + _battery + "%");
+                if (_battery <= 9)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("  " + _battery + "%");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(_posX, _posY + 1);
+                    Console.Write("x-O-x");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" " + _battery + "%");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(_posX, _posY + 1);
+                    Console.Write("x-O-x");
+                }
             }   
         }
     }
