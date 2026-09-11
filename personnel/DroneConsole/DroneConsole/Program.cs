@@ -34,34 +34,43 @@ namespace DroneConsole
     {
         static void Main(string[] args)
         {
-            // Déclarations des objects 
-            Drone[] tblDrone = { new Drone(0, 10, 50), new Drone(0, 15, 30) };
+            int count = 2;
 
-            // Paramètre 
+            List<Drone> drones = new List<Drone> { 
+                new Drone(0, 10, 50), 
+                new Drone(0, 15, 30) 
+            };
+
             Console.CursorVisible = false;
 
-            // Boucle qui fait tourner les drones jusqu'à qui reste aucun drone 
-            while (oneIsAlive(tblDrone))
+            while (oneIsAlive(drones))
             {
                 Console.Clear();
 
-                for (int i = 0; i < tblDrone.Length; i++)
+                foreach (Drone drone in drones)
                 {
-                    tblDrone[i].changeState();
-                    tblDrone[i].drawDrone();
+                    drone.changeState();
+                    drone.drawDrone();
                 }
 
-                Thread.Sleep(100);      // Pause de 0,1 sec
+                Thread.Sleep(100);
+
+                count++; 
+
+                if (count == 10)
+                {
+                    drones.Add(new Drone(0, 20, 60));
+                }
             }
 
             Console.ReadKey();
         }
 
-        static public bool oneIsAlive(Drone[] tblDrone)
+        static bool oneIsAlive(List<Drone> drones)
         {
-            for (int i = 0; i < tblDrone.Length; i++)
+            foreach (Drone drone in drones)
             {
-                if (tblDrone[i].Battery > 0)
+                if (drone.Battery > 1)
                 {
                     return true;
                 }
