@@ -1,5 +1,6 @@
 ﻿using Drones.Helpers;
 using Drones.Properties;
+using static System.Windows.Forms.AxHost;
 
 namespace Drones
 {
@@ -12,6 +13,9 @@ namespace Drones
         private int _y;                               // Position en Y depuis le haut de l'espace aérien
         private int _targetX;                         // Objectif en X vers lequel le drone se dirige
         private int _targetY;                         // Objectif en Y vers lequel le drone se dirige
+        public State _state;
+
+        public enum State { CRRASH, LOW_BATTERY, LOADING, ROAMING }
 
         // Constructeur
         public Drone(int x, int y, string name)
@@ -20,6 +24,7 @@ namespace Drones
             _y = y;
             _name = name;
             _charge = RandomHelpers.Next(Config.MAX_LOAD); // La charge initiale de la batterie est choisie aléatoirement
+            _state = State.ROAMING;
 
             // Le drone se fixe un objectif aléatoire quelque part dans l'espace aérien
             _targetX = RandomHelpers.Next(Config.AIRSPACE_WIDTH);
