@@ -51,9 +51,9 @@ namespace Drones
                 _x = _targetX;
                 _y = _targetY;
 
-                if (_state == State.ROAMING)
+                if (_state == State.ROAMING)                                 // Le drone a pour status ROAMING
                 {
-                    (_targetX, _targetY) = newTarget();
+                    (_targetX, _targetY) = newTarget();                      // Nouvelle destination 
                 }
                 
                 return;
