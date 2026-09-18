@@ -1,5 +1,6 @@
 ﻿using Drones.Helpers;
 using Drones.Properties;
+using Microsoft.VisualBasic;
 using static System.Windows.Forms.AxHost;
 
 namespace Drones
@@ -27,8 +28,12 @@ namespace Drones
             _state = State.ROAMING;
 
             // Le drone se fixe un objectif aléatoire quelque part dans l'espace aérien
-            _targetX = RandomHelpers.Next(Config.AIRSPACE_WIDTH);
-            _targetY = RandomHelpers.Next(Config.AIRSPACE_HEIGHT);
+            (_targetX, _targetY) = newTarget();
+        }
+
+        private (int, int) newTarget()
+        {
+            return (RandomHelpers.Next(Config.AIRSPACE_WIDTH), RandomHelpers.Next(Config.AIRSPACE_HEIGHT));
         }
 
         #region ================ Modelisation du drone et de son comportement ================
@@ -41,11 +46,17 @@ namespace Drones
 
             double distance = MathHelpers.Distance(_x, _y, _targetX, _targetY);
 
-            if (distance <= Config.SPEED * interval / 1000)                 // L'objectif est atteint (ou tout proche)
+            if (distance <= Config.SPEED * interval / 1000 )                 // L'objectif est atteint (ou tout proche)
             {
                 _x = _targetX;
                 _y = _targetY;
-                return;                                   // Le drone s'immobilise
+
+                if (_state == State.ROAMING)
+                {
+                    (_targetX, _targetY) = newTarget();
+                }
+                
+                return;
             }
 
             // Déplacement le long du vecteur unitaire vers l'objectif, à la vitesse du drone
