@@ -8,12 +8,13 @@ namespace Drones
     {
         // La flotte est l'ensemble des drones qui �voluent dans notre espace a�rien
         private List<Drone> _fleet;
+        private Charger _charger;
 
         private BufferedGraphicsContext _currentContext;
         private BufferedGraphics _airspace;
 
         // Initialisation de l'espace a�rien avec un certain nombre de drones
-        public AirSpace(List<Drone> fleet)
+        public AirSpace(List<Drone> fleet, Charger charger)
         {
             InitializeComponent();
             this.ClientSize = new Size(Config.AIRSPACE_WIDTH, Config.AIRSPACE_HEIGHT);
@@ -23,12 +24,15 @@ namespace Drones
             // dimensions the same size as the drawing surface of the form.
             _airspace = _currentContext.Allocate(this.CreateGraphics(), this.DisplayRectangle);
             _fleet = fleet;
+            _charger = charger;
         }
 
         // Affichage de la situation actuelle
         private void Render()
         {
             _airspace.Graphics.Clear(Color.AliceBlue);
+
+            _charger.Render(_airspace);
 
             // draw drones
             foreach (Drone drone in _fleet)

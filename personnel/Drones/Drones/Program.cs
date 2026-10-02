@@ -12,6 +12,9 @@ namespace Drones
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
+            // Création de la borne de recharge
+            Charger charger = new Charger(Config.AIRSPACE_WIDTH / 2, Config.AIRSPACE_HEIGHT / 2);
+
             // Cr�ation de la flotte de drones
             List<Drone> fleet= new List<Drone>();
             fleet.Add(new Drone(Config.AIRSPACE_WIDTH / 2, Config.AIRSPACE_HEIGHT / 2, "Joe"));
@@ -19,7 +22,7 @@ namespace Drones
             fleet.Add(new Drone(Config.AIRSPACE_WIDTH / 3, Config.AIRSPACE_HEIGHT / 3, "Karim"));
 
             // D�marrage
-            Application.Run(new AirSpace(fleet));
+            Application.Run(new AirSpace(fleet, charger));
         }
     }
 }
